@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://neumkonge93.github.io/indexm-aiyouxi-com-cn/sitemap.xml
