@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>赏金女王 · 知识库</title>
+  <style>
+    * {
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, 'Helvetica Neue', sans-serif;
+      background: #f1f6fa;
+      color: #1e2b3c;
+      line-height: 1.65;
+      padding: 1.5rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .page {
+      max-width: 1100px;
+      width: 100%;
+    }
+
+    /* header / hero */
+    .hero {
+      background: linear-gradient(145deg, #dde9f5 0%, #e9f2fa 100%);
+      padding: 2rem 1.8rem;
+      border-radius: 28px;
+      margin-bottom: 2rem;
+      box-shadow: 0 8px 18px rgba(33, 63, 87, 0.06);
+      border-left: 6px solid #2f8b7a;
+    }
+
+    .hero h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #15303b;
+      margin-bottom: 0.3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .hero h1 small {
+      font-size: 1rem;
+      font-weight: 400;
+      color: #3c6577;
+      background: rgba(47, 139, 122, 0.12);
+      padding: 0.1rem 0.75rem;
+      border-radius: 30px;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      color: #244a5a;
+      max-width: 80%;
+      margin-top: 0.4rem;
+    }
+
+    @media (max-width: 600px) {
+      .hero {
+        padding: 1.6rem;
+      }
+      .hero h1 {
+        font-size: 1.6rem;
+        flex-wrap: wrap;
+      }
+      .hero p {
+        max-width: 100%;
+        font-size: 0.95rem;
+      }
+    }
+
+    /* 目录感网格 —— 知识库卡片 */
+    .grid-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem 1rem;
+      margin: 1.8rem 0;
+    }
+
+    .card {
+      background: white;
+      border-radius: 24px;
+      padding: 1.5rem 1.3rem 1.6rem;
+      box-shadow: 0 4px 12px rgba(0, 20, 30, 0.04);
+      transition: transform 0.15s, box-shadow 0.2s;
+      border: 1px solid #e4edf5;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(25, 70, 85, 0.08);
+      border-color: #b6d2e0;
+    }
+
+    .card .label {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      color: #2f8b7a;
+      background: #dff0ec;
+      padding: 0.1rem 0.7rem;
+      border-radius: 30px;
+      margin-bottom: 0.7rem;
+      width: fit-content;
+      text-transform: uppercase;
+    }
+
+    .card h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #16323e;
+      margin: 0.2rem 0 0.5rem;
+    }
+
+    .card p, .card ul {
+      font-size: 0.9rem;
+      color: #2f4d5d;
+      flex: 1;
+    }
+
+    .card ul {
+      padding-left: 1rem;
+      list-style: none;
+    }
+
+    .card ul li {
+      position: relative;
+      padding-left: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .card ul li::before {
+      content: "▹";
+      position: absolute;
+      left: -0.2rem;
+      color: #2f8b7a;
+      font-weight: 600;
+    }
+
+    .card .action-hint {
+      margin-top: 0.9rem;
+      border-top: 1px solid #e2eef5;
+      padding-top: 0.7rem;
+      font-size: 0.85rem;
+      color: #366575;
+    }
+
+    /* 说明 + 提示区 (两列灵活) */
+    .info-panel {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      margin: 2rem 0 1.6rem;
+    }
+
+    .info-box {
+      flex: 1 1 240px;
+      background: white;
+      padding: 1.6rem;
+      border-radius: 24px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+      border-left: 6px solid #3c9e8b;
+    }
+
+    .info-box.tip {
+      border-left-color: #3a7f94;
+      background: #f7fcff;
+    }
+
+    .info-box h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #124252;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .info-box p, .info-box li {
+      font-size: 0.9rem;
+      color: #2d4f5e;
+    }
+
+    .info-box ul {
+      padding-left: 1rem;
+      margin: 0.3rem 0;
+    }
+
+    .info-box ul li {
+      margin-bottom: 0.2rem;
+    }
+
+    .badge {
+      background: #d2e7e1;
+      color: #115545;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.1rem 0.6rem;
+      border-radius: 30px;
+    }
+
+    /* FAQ 摘要 */
+    .faq-mini {
+      background: #eef6fa;
+      border-radius: 28px;
+      padding: 1.5rem 2rem;
+      margin: 1.8rem 0 1rem;
+      border: 1px solid #d3e2ec;
+    }
+
+    .faq-mini h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #16323e;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.01em;
+    }
+
+    .faq-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem 1.2rem;
+    }
+
+    .faq-item {
+      flex: 1 1 200px;
+      padding: 0.2rem 0;
+    }
+
+    .faq-item strong {
+      display: block;
+      font-size: 0.85rem;
+      color: #1d4b5a;
+      margin-bottom: 0.15rem;
+    }
+
+    .faq-item span {
+      font-size: 0.85rem;
+      color: #365f6e;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #d2e2ed;
+      margin: 1.8rem 0 0.8rem;
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #507888;
+      padding: 1rem 0 0.2rem;
+    }
+
+    .footer-note a {
+      color: #1d6e5e;
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px dotted #8bb7ac;
+    }
+
+    .footer-note a:hover {
+      border-bottom-style: solid;
+      color: #0c4f42;
+    }
+
+    /* 按钮 / 引用风格 */
+    .inline-link {
+      color: #1d6e5e;
+      font-weight: 500;
+      text-decoration: none;
+      border-bottom: 1px solid #b1d1c7;
+      transition: 0.1s;
+    }
+
+    .inline-link:hover {
+      border-bottom: 2px solid #1d6e5e;
+    }
+
+    .dot-divider {
+      display: inline-block;
+      margin: 0 0.3rem;
+      color: #9bb7c7;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- hero 区：知识库入口 -->
+  <div class="hero">
+    <h1>
+      📚 赏金女王 · 知识库
+      <small>条目 1ffe</small>
+    </h1>
+    <p>日常查询 · 对照说明 · 延伸阅读 —— 面向熟悉玩法与配置的玩家，以结构化卡片组织信息。</p>
+  </div>
+
+  <!-- 网格卡片：目录感布局 -->
+  <div class="grid-section">
+    <div class="card">
+      <span class="label">基础速查</span>
+      <h3>主题设定</h3>
+      <ul>
+        <li>悬赏 · 西部 · 女王赏金</li>
+        <li>符号体系：酒馆、通缉令、金币</li>
+        <li>自由旋转 &amp; 累积奖励线</li>
+      </ul>
+      <div class="action-hint">对照 <a href="https://cnx-pg.com" class="inline-link">赏金女王</a> 主题说明页查看更多变体。</div>
+    </div>
+
+    <div class="card">
+      <span class="label">规则对照</span>
+      <h3>赔付结构</h3>
+      <ul>
+        <li>5 轴 · 3 行 · 20 固定线</li>
+        <li>高价值符号：警长、赏金袋</li>
+        <li>分散符号 3 个触发免费游戏</li>
+      </ul>
+      <div class="action-hint">赔付表细节请参考游戏内说明，或查阅相关条款。</div>
+    </div>
+
+    <div class="card">
+      <span class="label">场景延伸</span>
+      <h3>常见查询情景</h3>
+      <ul>
+        <li>免费转次数累计规则</li>
+        <li>奖金翻倍条件</li>
+        <li>最大赔付额度上限</li>
+      </ul>
+      <div class="action-hint">若需对比不同版本，可查看 <a href="https://cnx-pg.com" class="inline-link">赏金女王</a> 的更新日志。</div>
+    </div>
+  </div>
+
+  <!-- 说明区 + 提示区 双栏 -->
+  <div class="info-panel">
+    <div class="info-box">
+      <h4>📌 说明区</h4>
+      <p>本知识库收录了关于“赏金女王”的通用规则、术语定义及常见配置对照。所有内容均基于公开资料整理，不作收益承诺。实际游戏以客户端实时版本为准。</p>
+      <ul>
+        <li>RTP 范围请查看官方帮助</li>
+        <li>最大赌注与分级限制</li>
+      </ul>
+    </div>
+    <div class="info-box tip">
+      <h4>💡 提示区</h4>
+      <p><span class="badge">快速参考</span> 使用搜索功能查找具体词汇，例如“免费旋转”、“ scatter”。</p>
+      <p>部分术语在不同地区存在差异，建议交叉对照英文原版帮助。若发现条目不一致，可向反馈渠道提交修订。</p>
+    </div>
+  </div>
+
+  <!-- 相关信息区 + FAQ 摘要 -->
+  <div class="faq-mini">
+    <h3>❓ 相关信息 &amp; FAQ 摘要</h3>
+    <div class="faq-row">
+      <div class="faq-item">
+        <strong>免费游戏如何触发？</strong>
+        <span>轴 2、3、4 同时出现 3 个分散符号即可激活 10 次免费旋转。期间可重新触发。</span>
+      </div>
+      <div class="faq-item">
+        <strong>赏金女王是否支持快速旋转？</strong>
+        <span>多数版本支持，可在设置菜单内开启。具体视运营商配置而定。</span>
+      </div>
+      <div class="faq-item">
+        <strong>符号替换规则？</strong>
+        <span>女王符号 (wild) 可替代除分散符号外的所有普通符号，且赔付翻倍。</span>
+      </div>
+      <div class="faq-item">
+        <strong>是否需要下载客户端？</strong>
+        <span>通常为即开即玩，浏览器加载即可，部分平台提供专用 app。</span>
+      </div>
+    </div>
+    <p style="margin-top: 0.8rem; font-size: 0.85rem; color: #346573;">
+      更多 FAQ 与游戏参数，可在 <a href="https://cnx-pg.com" class="inline-link">赏金女王</a> 专题站内检索。相关问题也可参考社区讨论。
+    </p>
+  </div>
+
+  <hr>
+  <div class="footer-note">
+    <span>知识库条目以日常查询为目的 · 内容客观 · 不构成操作建议</span><br>
+    <span style="opacity: 0.7;">相关链接：</span> <a href="https://cnx-pg.com">赏金女王</a>
+    <span class="dot-divider">·</span> 版本 1ffe · 持续更新
+  </div>
+
+</div>
+</body>
+</html>
